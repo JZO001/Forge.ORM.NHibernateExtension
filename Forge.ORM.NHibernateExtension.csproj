@@ -1,0 +1,71 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup Label="Globals">
+	  <SccProjectName>SAK</SccProjectName>
+	  <SccProvider>SAK</SccProvider>
+	  <SccAuxPath>SAK</SccAuxPath>
+	  <SccLocalPath>SAK</SccLocalPath>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFrameworks>net461;netstandard2.0;netcoreapp3.1;net6.0</TargetFrameworks>
+		<Version>2.0.0.0</Version>
+		<AssemblyVersion>2.0.0.0</AssemblyVersion>
+		<Copyright>Copyright © Zoltan Juhasz, 2004-2022</Copyright>
+		<Description>Forge NHibernate ORM Extensions</Description>
+		<Product>Forge: reference, practice and patterns implementations and helper(s)</Product>
+		<Company>Forge Project Contributor(s)</Company>
+		<PackageId>Forge.ORM.NHibernateExtension</PackageId>
+		<Authors>Zoltan Juhasz</Authors>
+		<Title>Forge ORM Extensions for NHibernate</Title>
+		<SignAssembly>true</SignAssembly>
+		<AssemblyOriginatorKeyFile>..\.Documents\Forge.pfx</AssemblyOriginatorKeyFile>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<ProjectGuid>{D1427FB9-2787-46E6-A5AC-D98E8476F4F7}</ProjectGuid>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<DocumentationFile>Forge.ORM.NHibernateExtension.xml</DocumentationFile>
+		<RepositoryUrl>https://github.com/JZO001/Forge.ORM.NHibernateExtension</RepositoryUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Net4CollectionTypeFactory.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="Forge.ORM.NHibernateExtension.xml" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+		<Reference Include="System.Configuration" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Net4CollectionTypeFactory.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" Condition="'$(TargetFramework)' != 'net461'" />
+		<PackageReference Include="Iesi.Collections" Version="4.0.5" />
+		<PackageReference Include="NHibernate" Version="5.4.0" />
+		<PackageReference Include="NHibernate.Mapping.Attributes" Version="5.1.0" />
+		<PackageReference Include="Remotion.Linq" Version="2.2.0" />
+		<PackageReference Include="Remotion.Linq.EagerFetching" Version="2.2.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Forge.Invoker\Forge.Invoker.csproj" />
+	  <ProjectReference Include="..\Forge.Reflection\Forge.Reflection.csproj" />
+	  <ProjectReference Include="..\Forge.Shared\Forge.Shared.csproj" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="echo F|xcopy /r /y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(SolutionDir).Output\$(TargetFramework)\$(TargetName).dll&quot;&#xD;&#xA;echo F|xcopy /r /y &quot;$(TargetDir)$(TargetName).pdb&quot; &quot;$(SolutionDir).Output\$(TargetFramework)\$(TargetName).pdb&quot;&#xD;&#xA;echo F|xcopy /r /y &quot;$(TargetDir)$(TargetName).xml&quot; &quot;$(SolutionDir).Output\$(TargetFramework)\$(TargetName).xml&quot;&#xD;&#xA;" />
+	</Target>
+
+</Project>
